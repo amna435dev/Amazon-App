@@ -9,7 +9,7 @@ export const placeOrder = async (req, res) => {
     const { products, shippingAddress } = req.body;
     const userId = req.user.id;
 
-    // ✅ Validate buyer
+    //  Validate buyer
     const buyer = await User.findById(userId);
     if (!buyer) {
       return res.status(403).json({
@@ -18,7 +18,7 @@ export const placeOrder = async (req, res) => {
       });
     }
 
-    // ✅ Validate shipping address
+    //  Validate shipping address
     if (
       !shippingAddress ||
       !shippingAddress.fullName ||
@@ -34,7 +34,7 @@ export const placeOrder = async (req, res) => {
       });
     }
 
-    // ✅ Validate products and calculate total price
+    //  Validate products and calculate total price
     let totalPrice = 0;
     const validatedProducts = [];
 
@@ -64,7 +64,7 @@ export const placeOrder = async (req, res) => {
       await product.save();
     }
 
-    // ✅ Create new order with shipping address
+    //  Create new order with shipping address
     const order = new Order({
       buyer: userId,
       products: validatedProducts,
@@ -124,7 +124,7 @@ export const cancelOrder = async (req, res) => {
       });
     }
 
-    // ✅ Check using overallStatus
+    //  Check using overallStatus
     if (
       order.overallStatus !== "pending" &&
       order.overallStatus !== "processing"
@@ -135,7 +135,7 @@ export const cancelOrder = async (req, res) => {
       });
     }
 
-    // ✅ Update both overall and product status
+    //  Update both overall and product status
     order.overallStatus = "cancelled";
     order.products.forEach((item) => {
       item.status = "cancelled";
@@ -339,65 +339,13 @@ export const getOrdersByBuyerId = async (req, res) => {
   }
 };
 
-// export const getOrdersBySellerId = async (req, res) => {
-//   try {
-//     const { sellerId } = req.params;
-//     const userId = req.user.id;
-
-//     // Validate user
-//     if (userId !== sellerId) {
-//       return res.status(403).json({
-//         success: false,
-//         message: "Unauthorized to view these orders",
-//       });
-//     }
-
-//     // Find orders containing products from the seller using aggregation
-//     const orders = await Order.aggregate([
-//       {
-//         $lookup: {
-//           from: "products",
-//           localField: "products.productId",
-//           foreignField: "_id",
-//           as: "productDetails",
-//         },
-//       },
-//       {
-//         $match: {
-//           "productDetails.seller": new mongoose.Types.ObjectId(sellerId),
-//         },
-//       },
-//       {
-//         $sort: { orderedAt: -1 },
-//       },
-//     ]);
-
-//     // Populate buyer and product details, including seller field
-//     const populatedOrders = await Order.populate(orders, [
-//       { path: "buyer", select: "name email" },
-//       { path: "products.productId", select: "name price images seller" },
-//     ]);
-
-//     res.status(200).json({
-//       success: true,
-//       count: populatedOrders.length,
-//       data: populatedOrders,
-//     });
-//   } catch (error) {
-//     console.error("Error fetching seller orders:", error.message);
-//     res.status(500).json({
-//       success: false,
-//       message: "Failed to fetch orders",
-//     });
-//   }
-// };
 
 export const getOrdersBySellerId = async (req, res) => {
   try {
     const { sellerId } = req.params;
     const userId = req.user.id;
 
-    // ✅ Validate user
+    //  Validate user
     if (userId !== sellerId) {
       return res.status(403).json({
         success: false,
@@ -405,7 +353,7 @@ export const getOrdersBySellerId = async (req, res) => {
       });
     }
 
-    // ✅ Find orders and populate buyer + products
+    //  Find orders and populate buyer + products
     const orders = await Order.find()
       .populate({ path: "buyer", select: "name email" })
       .populate({
@@ -414,7 +362,7 @@ export const getOrdersBySellerId = async (req, res) => {
       })
       .sort({ orderedAt: -1 });
 
-    // ✅ Filter orders that belong to this seller
+    //  Filter orders that belong to this seller
 
     const sellerIdStr = sellerId.toString();
     const sellerOrders = orders.filter((order) =>

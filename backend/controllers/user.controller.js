@@ -386,7 +386,7 @@ export const deleteUser = async (req, res) => {
 
    const id = req.user.id; // ✅ comes from JWT
    
-    // ✅ Find user
+    //  Find user
     const user = await User.findById(id);
     if (!user) {
       return res.status(404).json({
@@ -395,15 +395,15 @@ export const deleteUser = async (req, res) => {
       });
     }
 
-    // ✅ Delete profile image if exists
+    //  Delete profile image if exists
     if (user.profileImage) {
       await deleteFromCloudinary(user.profileImage, "image");
     }
 
-    // ✅ Find all products by this seller
+    //  Find all products by this seller
     const userProducts = await Product.find({ seller: id });
 
-    // ✅ Collect all product image deletions
+    //  Collect all product image deletions
     const deletions = [];
     for (const product of userProducts) {
       if (product.images?.length) {
@@ -413,16 +413,16 @@ export const deleteUser = async (req, res) => {
       }
     }
 
-    // ✅ Run all deletions in parallel (safer with allSettled)
+    //  Run all deletions in parallel (safer with allSettled)
     await Promise.all(deletions);
 
-    // ✅ Delete all products of this seller
+    // Delete all products of this seller
     await Product.deleteMany({ seller: id });
 
-    // ✅ Finally delete the user
+    // Finally delete the user
     await User.findByIdAndDelete(id);
 
-    // ✅ Clear JWT cookie
+    // Clear JWT cookie
     res.clearCookie("token", {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",

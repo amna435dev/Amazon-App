@@ -2,7 +2,7 @@ import Cart from "../models/cart.model.js";
 import Product from "../models/product.model.js";
 import mongoose from "mongoose";
 
-// ✅ Add product to cart
+//  Add product to cart
 
 export const addToCart = async (req, res) => {
   try {
@@ -58,7 +58,7 @@ export const addToCart = async (req, res) => {
   }
 };
 
-// ✅ Remove product from cart
+// Remove product from cart
 
 export const removeFromCart = async (req, res) => {
   try {
@@ -123,7 +123,7 @@ export const removeFromCart = async (req, res) => {
   }
 };
 
-// ✅ Update quantity
+// Update quantity
 export const updateCartQuantity = async (req, res) => {
   try {
     const { productId } = req.params;
@@ -172,7 +172,7 @@ export const updateCartQuantity = async (req, res) => {
 
     await cart.save();
 
-    // ✅ repopulate before sending response
+    //  repopulate before sending response
     const populatedCart = await Cart.findById(cart._id).populate(
       "items.product"
     );
@@ -191,7 +191,7 @@ export const updateCartQuantity = async (req, res) => {
   }
 };
 
-// ✅ Get user cart
+//  Get user cart
 export const getCart = async (req, res) => {
   try {
     const userId = req.user.id;

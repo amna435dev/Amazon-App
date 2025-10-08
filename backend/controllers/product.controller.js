@@ -104,31 +104,31 @@ export const getAllProducts = async (req, res) => {
       query.name = { $regex: search, $options: "i" }; // case-insensitive
     }
 
-    // 🎯 Filter by category & subCategory
+    //  Filter by category & subCategory
     if (category) query.category = category;
     if (subCategory) query.subCategory = subCategory;
 
-    // 💰 Price range filter
+    //  Price range filter
     if (minPrice || maxPrice) {
       query.price = {};
       if (minPrice) query.price.$gte = Number(minPrice);
       if (maxPrice) query.price.$lte = Number(maxPrice);
     }
 
-    // 📦 Stock availability
+    //  Stock availability
     if (inStock === "true") query.stock = { $gt: 0 };
 
-    // ⭐ Minimum rating filter
+    //  Minimum rating filter
     if (minRating) query.averageRating = { $gte: Number(minRating) };
 
-    // ⚡ Sorting (default: newest first)
+    //  Sorting (default: newest first)
     let sortOptions = { createdAt: -1 };
     if (sortBy) {
       const orderBy = order === "asc" ? 1 : -1;
       sortOptions = { [sortBy]: orderBy };
     }
 
-    // ⏳ Pagination
+    //  Pagination
     const skip = (page - 1) * limit;
 
     const products = await Product.find(query)
@@ -311,7 +311,7 @@ export const deleteProduct = async (req, res) => {
         .json({ success: false, message: "Not authorized" });
     }
 
-    // ✅ Delete product images from Cloudinary
+    //  Delete product images from Cloudinary
     if (product.images && product.images.length > 0) {
       const deletePromises = product.images.map((imgUrl) =>
         deleteFromCloudinary(imgUrl, "image")
@@ -319,7 +319,7 @@ export const deleteProduct = async (req, res) => {
       await Promise.all(deletePromises);
     }
 
-    // ✅ Delete the product from MongoDB
+    //  Delete the product from MongoDB
     await product.deleteOne();
 
     res.status(200).json({
