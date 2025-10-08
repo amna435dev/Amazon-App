@@ -11,7 +11,7 @@ export const PlaceOrderButton = ({ products, shippingAddress }) => {
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     const handlePlaceOrder = async () => {
-        // ✅ Validate shipping
+        //  Validate shipping
         if (
             !shippingAddress ||
             !shippingAddress.fullName ||
@@ -25,7 +25,7 @@ export const PlaceOrderButton = ({ products, shippingAddress }) => {
             return;
         }
 
-        // ✅ Validate cart products
+        //  Validate cart products
         if (!products || products.length === 0) {
             toast.error("Your cart is empty");
             return;

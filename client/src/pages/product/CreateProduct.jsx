@@ -83,13 +83,6 @@ const CreateProduct = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const data = new FormData();
-        // Object.keys(formData).forEach((key) => {
-        //     if (key === "images") {
-        //         formData.images.forEach((image) => data.append("images", image));
-        //     } else {
-        //         data.append(key, formData[key]);
-        //     }
-        // });
         Object.entries(formData).forEach(([key, value]) => {
             if (key === "images") {
                 value.forEach((image) => data.append("images", image));

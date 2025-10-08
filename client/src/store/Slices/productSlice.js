@@ -73,10 +73,6 @@ export const getProductsBySellerId = createAsyncThunk(
   async (sellerId, { rejectWithValue }) => {
     try {
       const res = await api.getProductsBySellerId(sellerId);
-        // console.log(
-        //   " getProductsBySellerId thunk sellerProducts ",
-        //   sellerProducts
-        // );
       return {
         sellerProducts: res.data.data,
         count: res.data.count,

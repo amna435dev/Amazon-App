@@ -12,8 +12,6 @@ function Header({ toggleSidebar }) {
   const { currentUser } = useSelector((state) => state.user);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-  // const [searchParams, setSearchParams] = useSearchParams();
-
   const handleLogout = async () => {
     try {
       await dispatch(logoutUser()).unwrap();
@@ -39,22 +37,6 @@ function Header({ toggleSidebar }) {
     // Optionally clear the header input
     setSearchTerm("");
   };
-
-  // const handleSearchV1 = (e) => {
-  //   e.preventDefault();
-
-  //   const query = searchTerm.trim();
-  //   if (!query) return;
-
-  //   // Navigate to Search page first
-  //   navigate("/search");
-
-  //   // Update the query param
-  //   setSearchParams({ q: query });
-
-  //   // Optional: clear the header input
-  //   setSearchTerm("");
-  // };
 
   const handleInputChange = (e) => {
     setSearchTerm(e.target.value);

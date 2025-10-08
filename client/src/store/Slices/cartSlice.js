@@ -8,7 +8,6 @@ export const addToCart = createAsyncThunk(
   async (data, { rejectWithValue }) => {
     try {
       const res = await api.addToCart(data);
-      //  console.log(" addToCart thunk res.data.cart ", res.data.cart);
       return res.data.cart;
     } catch (err) {
       return rejectWithValue(
