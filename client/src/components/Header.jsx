@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "../store/Slices/userSlice";
 import { FaSearch, FaUserCircle, FaSignOutAlt, FaBars } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
-import Amazon from "../assets/Amazon Logo.png";
+import Amazon from "../assets/Amazon-Logo.png";
 
 function Header({ toggleSidebar }) {
   const dispatch = useDispatch();
