@@ -1,16 +1,16 @@
-# Node modules
+# Node modules of the project
 node_modules/
 
-# Environment variables
+# Environment variables of the project
 .env
 
-# Build folders
+# Build folders of the project
 client/build/
 server/dist/
 
-# Logs
+# Logs of the project
 *.log
 
-# OS files
+# OS files of the project
 .DS_Store
 Thumbs.db
