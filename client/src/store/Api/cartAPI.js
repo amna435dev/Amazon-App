@@ -22,31 +22,3 @@ export const updateCartQuantity = (productId, quantity) =>
 
 export const getCart = () => api.get
 
-// ```js
-// import axios from "axios";
-
-// const api = axios.create({
-//   baseURL: `${import.meta.env.VITE_API_URL}/Carts`,
-//   withCredentials: true,
-// });
-
-// export const addToCart = (data) =>
-//   api.post("/add", data, {
-//     headers: { "Content-Type": "application/json" },
-//   });
-
-// export const removeFromCart = (productId) =>
-//   api.delete(`/remove/${productId}`);
-
-// export const updateCartQuantity = (productId, quantity) =>
-//   api.patch(
-//     `/quantity/${productId}`,
-//     { quantity },
-//     {
-//       headers: { "Content-Type": "application/json" },
-//     }
-//   );
-
-// export const getCart = () => api.get("/");
-// ```
-
